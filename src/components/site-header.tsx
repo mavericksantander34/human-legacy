@@ -14,7 +14,7 @@ export function SiteHeader() {
         <Link href="/#como-funciona">Cómo funciona</Link>
         <Link href="/recuerdos">Recuerdos</Link>
         <Link className="button-link" href="/acceso">
-          Mi espacio
+          Iniciar sesión
         </Link>
       </nav>
     </header>

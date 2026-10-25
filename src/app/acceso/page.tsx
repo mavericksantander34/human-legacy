@@ -20,11 +20,11 @@ export default async function AccessPage({ searchParams }: AccessPageProps) {
       <SiteHeader />
       <main className="form-page">
         <section className="form-card">
-          <p className="eyebrow">Tu espacio</p>
-          <h1>Entra a Human Legacy</h1>
+          <p className="eyebrow">Acceso a tu espacio</p>
+          <h1>Inicia sesión o crea tu cuenta</h1>
           <p>
-            Usa tu correo para recibir un enlace seguro. Desde tu cuenta podrás
-            crear y administrar memoriales.
+            Ingresa tu correo y te enviaremos un enlace seguro para entrar.
+            Si es tu primera vez, el enlace también te permitirá crear tu cuenta.
           </p>
           {params.error && (
             <p className="form-error" role="alert">
@@ -33,7 +33,7 @@ export default async function AccessPage({ searchParams }: AccessPageProps) {
           )}
           <AccessForm nextPath={nextPath} />
           <p className="field-hint" style={{ marginTop: 22 }}>
-            Usaremos tu correo para enviarte el enlace de acceso. <Link className="text-link" href="/">Conoce el proyecto</Link>
+            No necesitas una contraseña. <Link className="text-link" href="/">Conoce el proyecto</Link>
           </p>
         </section>
       </main>

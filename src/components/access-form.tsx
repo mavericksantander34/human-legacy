@@ -51,7 +51,7 @@ export function AccessForm({ nextPath }: { nextPath: string }) {
       {error && <p className="form-error" role="alert">{error}</p>}
       {message && <p className="form-success" role="status">{message}</p>}
       <button className="button" disabled={sending} type="submit">
-        {sending ? "Enviando enlace…" : "Enviar enlace de acceso"}
+        {sending ? "Enviando enlace…" : "Enviar enlace para iniciar sesión"}
       </button>
     </form>
   );
