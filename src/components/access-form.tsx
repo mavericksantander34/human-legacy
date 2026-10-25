@@ -1,11 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import { type FormEvent, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 
 export function AccessForm({ nextPath }: { nextPath: string }) {
   const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [sending, setSending] = useState(false);
 
@@ -13,20 +14,21 @@ export function AccessForm({ nextPath }: { nextPath: string }) {
     event.preventDefault();
     setSending(true);
     setError("");
-    setMessage("");
 
     try {
-      const supabase = createClient();
-      const { error: authError } = await supabase.auth.signInWithOtp({
+      const { error: authError } = await createClient().auth.signInWithPassword({
         email,
-        options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextPath)}`,
-        },
+        password,
       });
-      if (authError) throw authError;
-      setMessage("Te enviamos un enlace de acceso. Revisa tu correo para continuar.");
+      if (authError) {
+        if (authError.message === "Invalid login credentials") {
+          throw new Error("El correo o la contraseña no son correctos.");
+        }
+        throw authError;
+      }
+      window.location.assign(nextPath);
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : "No se pudo enviar el enlace.");
+      setError(cause instanceof Error ? cause.message : "No se pudo iniciar sesión.");
     } finally {
       setSending(false);
     }
@@ -35,7 +37,7 @@ export function AccessForm({ nextPath }: { nextPath: string }) {
   return (
     <form onSubmit={submit}>
       <div className="field">
-        <label htmlFor="email">Tu correo electrónico</label>
+        <label htmlFor="email">Correo electrónico</label>
         <input
           autoComplete="email"
           id="email"
@@ -44,15 +46,34 @@ export function AccessForm({ nextPath }: { nextPath: string }) {
           type="email"
           value={email}
         />
-        <span className="field-hint">
-          Te enviaremos un enlace seguro; no necesitas crear una contraseña.
-        </span>
+      </div>
+      <div className="field">
+        <label htmlFor="password">Contraseña</label>
+        <input
+          autoComplete="current-password"
+          id="password"
+          onChange={(event) => setPassword(event.target.value)}
+          required
+          type="password"
+          value={password}
+        />
       </div>
       {error && <p className="form-error" role="alert">{error}</p>}
-      {message && <p className="form-success" role="status">{message}</p>}
       <button className="button" disabled={sending} type="submit">
-        {sending ? "Enviando enlace…" : "Enviar enlace para iniciar sesión"}
+        {sending ? "Iniciando sesión…" : "Iniciar sesión"}
       </button>
+      <p className="field-hint" style={{ marginTop: 18 }}>
+        <Link className="text-link" href="/recuperar-clave">¿Olvidaste tu contraseña?</Link>
+      </p>
+      <p className="field-hint" style={{ marginTop: 12 }}>
+        ¿Aún no tienes cuenta?{" "}
+        <Link
+          className="text-link"
+          href={`/registro?next=${encodeURIComponent(nextPath)}`}
+        >
+          Crear cuenta
+        </Link>
+      </p>
     </form>
   );
 }

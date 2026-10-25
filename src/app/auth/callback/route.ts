@@ -15,7 +15,10 @@ export async function GET(request: NextRequest) {
   }
 
   if (error) {
-    return NextResponse.redirect(new URL("/acceso?error=callback", request.url));
+    const errorPath = nextPath === "/cuenta/cambiar-clave"
+      ? "/recuperar-clave?error=callback"
+      : "/acceso?error=callback";
+    return NextResponse.redirect(new URL(errorPath, request.url));
   }
 
   const supabase = await createClient();
@@ -50,5 +53,8 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  return NextResponse.redirect(new URL("/acceso?error=callback", request.url));
+  const errorPath = nextPath === "/cuenta/cambiar-clave"
+    ? "/recuperar-clave?error=callback"
+    : "/acceso?error=callback";
+  return NextResponse.redirect(new URL(errorPath, request.url));
 }

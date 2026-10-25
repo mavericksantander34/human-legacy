@@ -21,21 +21,18 @@ export default async function AccessPage({ searchParams }: AccessPageProps) {
       <main className="form-page">
         <section className="form-card">
           <p className="eyebrow">Acceso a tu espacio</p>
-          <h1>Inicia sesión o crea tu cuenta</h1>
-          <p>
-            Ingresa tu correo y te enviaremos un enlace seguro para entrar.
-            Si es tu primera vez, el enlace también te permitirá crear tu cuenta.
-          </p>
+          <h1>Iniciar sesión</h1>
+          <p>Ingresa con el correo y la contraseña de tu cuenta.</p>
           {params.error && (
             <p className="form-error" role="alert">
-              No pudimos validar el enlace. Puede haber vencido o la URL de retorno
-              de Supabase no estar configurada para este dominio. Solicita otro enlace
-              e inténtalo nuevamente.
+              No pudimos completar la autenticación. Revisa tus datos e inténtalo de
+              nuevo. Si confirmaste tu correo desde un enlace, revisa la URL de retorno
+              configurada en Supabase.
             </p>
           )}
           <AccessForm nextPath={nextPath} />
           <p className="field-hint" style={{ marginTop: 22 }}>
-            No necesitas una contraseña. <Link className="text-link" href="/">Conoce el proyecto</Link>
+            <Link className="text-link" href="/">Conoce el proyecto</Link>
           </p>
         </section>
       </main>

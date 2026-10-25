@@ -20,12 +20,12 @@ Postgres y Storage).
    `supabase/migrations/202610250002_family_lineage.sql` en el SQL Editor de
    Supabase. Si ya ejecutaste la primera, ejecuta solo la segunda. No vuelvas a
    ejecutar una migración que ya se aplicó.
-3. En Supabase Auth, configura el proveedor de correo y agrega las URLs de retorno
-   de cada entorno, por ejemplo `http://localhost:3000/auth/callback` y
-   `https://TU-DOMINIO-VERCEL/auth/callback`, a **Redirect URLs**. El enlace de
-   correo puede llegar como `code` o como `token_hash`; el callback admite ambos.
-   Si personalizas la plantilla de correo para renderizado en servidor, verifica
-   el enlace a `/auth/callback` con `token_hash` y el `type` que entrega Supabase.
+3. En Supabase Auth, habilita registro por correo/contraseña, configura el proveedor
+   de correo y agrega las URLs de retorno de cada entorno, por ejemplo
+   `http://localhost:3000/auth/callback` y
+   `https://TU-DOMINIO-VERCEL/auth/callback`, a **Redirect URLs**. Las confirmaciones
+   de registro y restablecimiento usan ese callback; este admite los formatos
+   `code` y `token_hash` de Supabase.
 4. Instala dependencias con `npm install` e inicia con `npm run dev`.
 
 La Publishable key está diseñada para ser pública y no sustituye los permisos de
@@ -38,8 +38,9 @@ autorización explícita para mostrarse en un memorial compartido.
 
 - Next.js App Router sirve la web pública, los memoriales y el espacio privado.
 - TypeScript modela los tipos del dominio y el cliente tipado de Supabase.
-- Supabase Auth usa enlaces de acceso por correo; quienes visitan un QR no necesitan
-  una cuenta.
+- Supabase Auth usa correo y contraseña para iniciar sesión y registrarse, con
+  confirmación por correo y restablecimiento de contraseña. Quienes visitan un QR
+  no necesitan una cuenta.
 - Postgres guarda memoriales y metadatos de archivos. `owner_id` y las políticas
   RLS aíslan la gestión de cada cuenta; solo memoriales `public` o `unlisted` se
   pueden leer sin ser su propietario.
