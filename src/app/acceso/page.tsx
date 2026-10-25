@@ -28,7 +28,9 @@ export default async function AccessPage({ searchParams }: AccessPageProps) {
           </p>
           {params.error && (
             <p className="form-error" role="alert">
-              El enlace venció o no es válido. Solicita uno nuevo.
+              No pudimos validar el enlace. Puede haber vencido o la URL de retorno
+              de Supabase no estar configurada para este dominio. Solicita otro enlace
+              e inténtalo nuevamente.
             </p>
           )}
           <AccessForm nextPath={nextPath} />

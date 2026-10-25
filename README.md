@@ -20,8 +20,12 @@ Postgres y Storage).
    `supabase/migrations/202610250002_family_lineage.sql` en el SQL Editor de
    Supabase. Si ya ejecutaste la primera, ejecuta solo la segunda. No vuelvas a
    ejecutar una migración que ya se aplicó.
-3. En Supabase Auth, configura el proveedor de correo y permite la URL local
-   `http://localhost:3000/auth/callback` como URL de redirección.
+3. En Supabase Auth, configura el proveedor de correo y agrega las URLs de retorno
+   de cada entorno, por ejemplo `http://localhost:3000/auth/callback` y
+   `https://TU-DOMINIO-VERCEL/auth/callback`, a **Redirect URLs**. El enlace de
+   correo puede llegar como `code` o como `token_hash`; el callback admite ambos.
+   Si personalizas la plantilla de correo para renderizado en servidor, verifica
+   el enlace a `/auth/callback` con `token_hash` y el `type` que entrega Supabase.
 4. Instala dependencias con `npm install` e inicia con `npm run dev`.
 
 La Publishable key está diseñada para ser pública y no sustituye los permisos de
