@@ -2,6 +2,7 @@
 
 import { type FormEvent, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import { authErrorMessage } from "@/lib/auth-error-message";
 
 export function PasswordResetRequestForm() {
   const [email, setEmail] = useState("");
@@ -25,7 +26,9 @@ export function PasswordResetRequestForm() {
       if (resetError) throw resetError;
       setMessage("Si existe una cuenta para ese correo, recibirás instrucciones para restablecer la contraseña.");
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : "No se pudo solicitar el restablecimiento.");
+      setError(
+        authErrorMessage(cause, "No se pudo solicitar el restablecimiento."),
+      );
     } finally {
       setSending(false);
     }

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { type FormEvent, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import { authErrorMessage } from "@/lib/auth-error-message";
 
 export function SignUpForm({ nextPath }: { nextPath: string }) {
   const [email, setEmail] = useState("");
@@ -44,7 +45,7 @@ export function SignUpForm({ nextPath }: { nextPath: string }) {
       }
       setMessage("Cuenta creada. Confirma tu correo con el enlace que te enviamos para poder iniciar sesión.");
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : "No se pudo crear la cuenta.");
+      setError(authErrorMessage(cause, "No se pudo crear la cuenta."));
     } finally {
       setSending(false);
     }

@@ -28,6 +28,14 @@ Postgres y Storage).
    `code` y `token_hash` de Supabase.
 4. Instala dependencias con `npm install` e inicia con `npm run dev`.
 
+El proveedor de correo integrado de Supabase tiene límites de envío y sirve solo
+para pruebas de bajo volumen. Si recibes `email rate limit exceeded`, deja de
+solicitar mensajes, espera a que se libere la ventana de límite y prueba una vez.
+Para un entorno de pruebas persistente o producción, configura un proveedor SMTP
+propio en **Supabase → Authentication → SMTP Settings** y comprueba sus límites.
+El inicio de sesión con contraseña no envía correo; el correo solo se usa para
+confirmar cuentas y recuperar contraseñas.
+
 La Publishable key está diseñada para ser pública y no sustituye los permisos de
 la base de datos. Nunca incluyas la clave secreta `service_role` en el archivo JS,
 en variables `NEXT_PUBLIC_*` ni en el navegador. La lectura y escritura están
